@@ -10,6 +10,7 @@ app.use(express.json())
 //Available Routes
 // app.use('/auth/user', require('./routes/auth'));
 app.post('/auth/user',require('./routes/auth'));
+app.post('/auth/login',require('./routes/auth'));
 
 
 app.listen(port, () => {
