@@ -9,9 +9,9 @@ const port = 5000
 app.use(express.json())
 
 //Available Routes
-app.post('/auth/user',require('./routes/auth'));
-app.post('/auth/login',require('./routes/auth'));
-app.post('/auth/getuser',require('./routes/auth'));
+app.use('/auth',require('./routes/auth'));
+app.use('/notes',require('./routes/notes'));
+
 
 
 app.listen(port, () => {

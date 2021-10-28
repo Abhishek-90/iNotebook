@@ -9,7 +9,7 @@ const fetchuser = require('../middleware/fetchuser');
 
 //Getting post request for new User Creation.
 router.post(
-  "/auth/user",
+  "/user",
   [
     //Validation Creteria
     body("email").isEmail(),
@@ -18,8 +18,6 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    // console.log(errors);
-
     //Checking for errors in the user entered data. Validating user data.
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() });
@@ -62,7 +60,7 @@ router.post(
 
 //API Endpoint for user login.
 router.post(
-  "/auth/login",
+  "/login",
   [
     body("email", "Enter Valid Email Id").isEmail(),
     body("password", "Enter Password").exists(),
@@ -109,7 +107,7 @@ router.post(
 
 //ROUTE 3: Getting user Id from auth token. Login Required.
 
-router.post('/auth/getuser',fetchuser,async (req,res) => {
+router.post('/getuser',fetchuser,async (req,res) => {
     try{
         const userId = req.user.id;
         const user = await User.findById(userId).select("-password");
