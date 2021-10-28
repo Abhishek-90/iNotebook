@@ -1,16 +1,17 @@
 const express = require('express');
-const mongoDbConnect = require('./db.js')
+const {connectToMongoose} = require('./db.js') //Returns SingleTon object
 
-mongoDbConnect();
+connectToMongoose();
+
 const app = express()
 const port = 5000
 
 app.use(express.json())
 
 //Available Routes
-// app.use('/auth/user', require('./routes/auth'));
 app.post('/auth/user',require('./routes/auth'));
 app.post('/auth/login',require('./routes/auth'));
+app.post('/auth/getuser',require('./routes/auth'));
 
 
 app.listen(port, () => {

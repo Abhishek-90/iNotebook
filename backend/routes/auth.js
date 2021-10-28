@@ -5,6 +5,7 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWT_Secret = "iNoteBookSecret";
+const fetchuser = require('../middleware/fetchuser');
 
 //Getting post request for new User Creation.
 router.post(
@@ -17,7 +18,7 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    console.log(errors);
+    // console.log(errors);
 
     //Checking for errors in the user entered data. Validating user data.
     if (!errors.isEmpty()) {
@@ -68,7 +69,6 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    console.log(errors);
 
     //Checking if entered Credentials have any errors. Returning error list if any.
     if (!errors.isEmpty()) {
@@ -91,7 +91,7 @@ router.post(
       }
 
       const data = {
-        userId: {
+        user: {
           id: user.id,
         },
       };
@@ -106,5 +106,18 @@ router.post(
     }
   }
 );
+
+//ROUTE 3: Getting user Id from auth token. Login Required.
+
+router.post('/auth/getuser',fetchuser,async (req,res) => {
+    try{
+        const userId = req.user.id;
+        const user = await User.findById(userId).select("-password");
+        res.status(200).send({user});
+    }
+    catch(error){
+        res.status(500).send({error});
+    }
+});
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); // Returns SingleTon Object
 const mongooseUri = 'mongodb://localhost:27017/iNotebook?readPreference=primary&appname=MongoDB%20Compass&ssl=false';
 
 const connectToMongoose = () => {
@@ -7,4 +7,4 @@ const connectToMongoose = () => {
     })
 }
 
-module.exports = connectToMongoose;
+module.exports = {connectToMongoose};
