@@ -18,9 +18,10 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
+    let success = false;
     //Checking for errors in the user entered data. Validating user data.
     if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() });
+      res.status(400).json({success, errors: errors.array() });
     }
 
     try {
@@ -28,7 +29,7 @@ router.post(
 
       let user = await User.findOne({ email: req.body.email });
       if (user) {
-        return res.status(400).json({ errorMessage: "Email Id already Used" });
+        return res.status(400).json({success, errorMessage: "Email Id already Used" });
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -50,7 +51,7 @@ router.post(
       //Creating JWT and sending it to user.
       const authtoken = jwt.sign(data, JWT_Secret);
 
-      res.json({ authtoken });
+      res.json({success:true, authtoken });
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Some Error occured.");
@@ -67,10 +68,10 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-
+    let success = false;
     //Checking if entered Credentials have any errors. Returning error list if any.
     if (!errors.isEmpty()) {
-      res.status(400).send({ errors });
+      res.status(400).send({success, errors });
     }
 
     let { email, password } = req.body;
@@ -79,13 +80,13 @@ router.post(
       let user = await User.findOne({ email });
 
       if (!user) {
-        return res.status(400).json({ Message: "Enter Correct Credentials" });
+        return res.status(400).json({success, Message: "Enter Correct Credentials" });
       }
 
       let passwordCompare = await bcrypt.compare(password, user.password);
 
       if (!passwordCompare) {
-        return res.status(400).json({ Message: "Enter Correct Credentials" });
+        return res.status(400).json({success, Message: "Enter Correct Credentials" });
       }
 
       const data = {
@@ -97,7 +98,7 @@ router.post(
       //Creating JWT and sending it to user.
       const authtoken = jwt.sign(data, JWT_Secret);
 
-      return res.json({ authtoken });
+      return res.json({success:true, authtoken });
     } 
     catch (error) {
         res.status(500).json({error});

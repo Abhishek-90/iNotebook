@@ -17,7 +17,7 @@ const Notes = () => {
   const [note, setNote] = useState({id:"",etitle:"",edescription:"",etag:""});
 
   const handleClick = (e)=>{
-    console.log("Updating Note\n",note);
+    // console.log("Updating Note\n",note);
     editNote(note.id,note.etitle,note.edescription,note.etag);
     refClose.current.click();
   }
@@ -54,19 +54,25 @@ const Notes = () => {
                   name="etitle"
                   onChange={onchange}
                   value={note.etitle}
+                  minLength={5}
+                  required={true}
                 />
               </div>
               <div className="mb-3">
                 <label htmlFor="edescription" className="form-label">
                   Description
                 </label>
-                <input
+                <textarea
                   type="text"
                   className="form-control"
                   id="edescription"
                   name="edescription"
                   onChange={onchange}
                   value={note.edescription}
+                  minLength={5}
+                  required={true}
+                  rows={5}
+
                 />
               </div>
               <div className="mb-3">
@@ -85,7 +91,7 @@ const Notes = () => {
             </form>
               <div className="modal-footer">
                 <button ref = {refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
+                <button disabled={note.edescription.length < 5 || note.etitle.length < 5} type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
               </div>
             </div>
           </div>

@@ -35,6 +35,11 @@ const Navbar = (props) => {
                 </Link>
               </li>
             </ul>
+
+            <div className="d-flex">
+              <Link className="btn btn-primary mx-2" role="button" to="/login">Login</Link>
+              <Link className="btn btn-primary mx-2" role="button" to="/signup">Signup</Link>
+            </div>
           </div>
         </div>
       </nav>
