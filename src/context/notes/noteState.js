@@ -1,18 +1,17 @@
 import noteContext from "./noteContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const NoteState = (props) => {
   const host = "http://localhost:5000/notes/";
-
   const [notes, setNotes] = useState([]);
-  const token = localStorage.getItem("authToken");
+
   const fetchNotes = async () => {
 
     const response = await fetch(`${host}fetchnotes`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":token,
+        "auth-token":localStorage.getItem('authToken'),
       },
     });
 
@@ -28,7 +27,7 @@ const NoteState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":token,
+        "auth-token":localStorage.getItem('authToken'),
       },
       body: JSON.stringify({ title, description, tag }),
     });
@@ -46,7 +45,7 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": token,
+        "auth-token": localStorage.getItem('authToken'),
       },
     });
     
@@ -58,12 +57,12 @@ const NoteState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":token,
+        "auth-token":localStorage.getItem('authToken'),
       },
       body: JSON.stringify({ title:title, description:description, tag:tag }),
     });
-    const json = await response.json();
     // eslint-disable-next-line
+    const json = await response.json();
   
     const newNote = JSON.parse(JSON.stringify(notes));
 
@@ -79,10 +78,6 @@ const NoteState = (props) => {
     setNotes(newNote);
     return response.status;
   };
-
-  useEffect(() => {
-    fetchNotes();
-  }, []);
 
   return (
     <noteContext.Provider value={{ notes, addNote, deleteNote, editNote,fetchNotes }}>

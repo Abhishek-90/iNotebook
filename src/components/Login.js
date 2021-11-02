@@ -44,10 +44,10 @@ const Login = (props) => {
             type="email"
             className="form-control"
             id="email"
-			value={credentials.email}
+			      value={credentials.email}
             aria-describedby="emailHelp"
-			name="email"
-			onChange={onchange}
+			      name="email"
+			      onChange={onchange}
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
@@ -61,9 +61,9 @@ const Login = (props) => {
             type="password"
             className="form-control"
             id="password"
-			value={credentials.password}
-			name="password"
-			onChange={onchange}
+            value={credentials.password}
+            name="password"
+            onChange={onchange}
           />
         </div>
 

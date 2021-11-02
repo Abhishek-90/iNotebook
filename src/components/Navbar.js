@@ -1,9 +1,16 @@
 import React from "react";
 import { Link,useLocation } from "react-router-dom";
+import { useHistory } from "react-router";
 
 const Navbar = (props) => {
   const location = useLocation().pathname;
+  let history = useHistory();
 
+  const handleLogout = ()=>{
+    localStorage.removeItem("authToken");
+    history.push('/login');
+  }
+  
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,10 +43,10 @@ const Navbar = (props) => {
               </li>
             </ul>
 
-            <div className="d-flex">
+            {!localStorage.getItem("authToken") ? <div className="d-flex">
               <Link className="btn btn-primary mx-2" role="button" to="/login">Login</Link>
               <Link className="btn btn-primary mx-2" role="button" to="/signup">Signup</Link>
-            </div>
+            </div> : <button onClick={handleLogout} className="btn btn-primary">Logout</button>}
           </div>
         </div>
       </nav>
