@@ -89,7 +89,7 @@ router.delete('/deletenote/:id',fetchuser,async (req,res)=>{
         
         await Notes.findByIdAndDelete(req.params.id);
 
-        return res.send(`${req.params.id} Deleted`);
+        return res.send("success");
     }
     catch(error){
         return res.status(500).json({error});
